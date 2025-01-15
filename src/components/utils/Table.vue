@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, defineEmits, defineProps } from "vue";
 import { useRouter } from "vue-router";
 import Switch from "@/components/inputs/Switch.vue";
 

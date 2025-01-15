@@ -19,7 +19,7 @@
   </template>
   
   <script setup>
-  import { ref, watch } from "vue";
+  import { ref, watch, defineEmits, defineProps } from "vue";
   
   const props = defineProps({
     modelValue: {
