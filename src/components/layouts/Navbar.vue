@@ -1,0 +1,59 @@
+<template>
+  <nav
+    class="py-4 px-6 bg-gray-800 text-white dark:bg-gray-700 dark:text-gray-200"
+  >
+    <!-- Contenedor centrado y con ancho máximo -->
+    <div class="max-w-screen-xl mx-auto flex justify-between items-center w-full">
+      <!-- Logo -->
+      <div class="logo">
+        <Logo />
+      </div>
+
+      <!-- Nombre de Empresa -->
+      <CompanyName :companyName="companyName" />
+
+      <!-- Componente Dropdown -->
+      <Dropdown>
+        <!-- Botón personalizado -->
+        <template #button-content>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5.121 17.804A9.969 9.969 0 0112 15c2.257 0 4.318.746 5.879 2.004M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+          <span>{{ username }}</span>
+        </template>
+      </Dropdown>
+    </div>
+  </nav>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import Logo from "./Logo.vue";
+import Dropdown from "./Dropdown.vue";
+import CompanyName from "./CompanyName.vue"; // Importamos el nuevo componente
+
+const router = useRouter();
+const username = ref("Usuario");
+const companyName = ref("NOMBRE DE EMPRESA"); // Aquí se define el nombre de la empresa
+
+const logout = () => {
+  localStorage.removeItem("user");
+  router.push("/");
+};
+</script>
+
+<style scoped>
+/* Estilos opcionales */
+</style>
