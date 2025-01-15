@@ -11,4 +11,10 @@ if (savedTheme === "dark") {
   document.documentElement.classList.remove("dark");
 }
 
-createApp(App).use(router).mount('#app')
+// Crea la aplicación y aplica configuraciones
+const app = createApp(App);
+
+app.use(router);
+
+app.mount('#app');
+
