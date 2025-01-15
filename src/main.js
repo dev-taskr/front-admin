@@ -1,6 +1,6 @@
-import { createApp } from 'vue';
+import { createApp } from '../node_modules/vue';
 import App from './App.vue';
-import router from './router';
+import router from './router/route';
 import "./style.css";
 
 // Aplica el tema antes de inicializar Vue
