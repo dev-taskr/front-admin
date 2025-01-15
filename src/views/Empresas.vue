@@ -40,8 +40,8 @@
   
   <script setup>
   import { ref, computed } from "vue";
-  import BaseLayout from "../components/layouts/Layout.vue";
-  import Table from "../components/utils/Table.vue";
+  import BaseLayout from "@/components/layouts/Layout.vue";
+  import Table from "@/components/utils/Table.vue";
   
   // Estado inicial de las filas
   const rows = ref([

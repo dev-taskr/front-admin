@@ -40,9 +40,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import Logo from "./Logo.vue";
-import Dropdown from "./Dropdown.vue";
-import CompanyName from "./CompanyName.vue"; // Importamos el nuevo componente
+import Logo from "@/components/layouts/Logo.vue";
+import Dropdown from "@/components/layouts/Dropdown.vue";
+import CompanyName from "@/components/layouts/CompanyName.vue"; // Importamos el nuevo componente
 
 const router = useRouter();
 const username = ref("Usuario");

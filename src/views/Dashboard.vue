@@ -17,8 +17,8 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import BaseLayout from "../components/layouts/Layout.vue";
-import GridComponent from "../components/layouts/GridComponent.vue";
+import BaseLayout from "@/components/layouts/Layout.vue";
+import GridComponent from "@/components/layouts/GridComponent.vue";
 
 const user = ref(null);
 

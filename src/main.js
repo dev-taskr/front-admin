@@ -1,7 +1,7 @@
-import './style.css'
+import '@/style.css'
 import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import App from '@/App.vue'
+import router from '@/router'
 
 // Aplica el tema antes de inicializar Vue
 const savedTheme = localStorage.getItem("theme");

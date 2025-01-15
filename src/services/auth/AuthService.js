@@ -1,4 +1,4 @@
-import axiosInstance from '../axiosInstance';
+import axiosInstance from '@/services/axiosInstance';
 
 const authService = {
   login: async (credentials) => {

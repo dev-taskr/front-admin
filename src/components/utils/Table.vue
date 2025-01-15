@@ -88,7 +88,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
-import Switch from "../inputs/Switch.vue";
+import Switch from "@/components/inputs/Switch.vue";
 
 // Propiedades
 const props = defineProps({

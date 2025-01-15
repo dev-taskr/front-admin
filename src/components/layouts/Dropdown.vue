@@ -45,7 +45,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
-import ThemeToggle from "./ThemeToggle.vue";
+import ThemeToggle from "@/components/layouts/ThemeToggle.vue";
 
 const isOpen = ref(false);
 const dropdownRef = ref(null);
