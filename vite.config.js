@@ -9,12 +9,4 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src/'),
     },
   },
-  build: {
-    rollupOptions: {
-      cache: false,
-      output: {
-        exports: 'named',
-      },
-    },
-  },
 });
