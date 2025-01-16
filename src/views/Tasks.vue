@@ -1,5 +1,5 @@
 <template>
-    <BaseLayout>
+    <BaseLayout :title="'Lista de Tareas'">
       <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         <Filters />
         <div class=" mx-auto"><!-- max-w-[1200px] -->

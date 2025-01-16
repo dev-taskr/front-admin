@@ -1,5 +1,5 @@
 <template>
-  <BaseLayout>
+  <BaseLayout :title="'Bienvenido'">
     <!-- <h1 class="text-2xl font-bold mb-6">Bienvenido, {{ user?.name }}</h1> -->
     <div class="grid grid-cols-12 gap-6">
       <!-- Columna izquierda (8/12) -->
