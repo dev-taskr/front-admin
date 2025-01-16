@@ -1,149 +1,195 @@
 <template>
     <div
-        class="bg-white dark:bg-gray-800 rounded-lg border-2 p-4 transition-colors duration-200"
-        :class="{
-            'border-green-500': localState === 'completed',
-            'border-red-500': localState === 'failed',
-            'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700': clickable
-        }"
-        @click="handleItemClick"
+      class="bg-white dark:bg-gray-800 rounded-lg border-2 p-4 transition-colors duration-200"
+      :class="{
+        'border-green-500': localState === 'completed',
+        'border-red-500': localState === 'failed',
+        'border-gray-500': localState === 'neutro',
+        'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700': clickable,
+      }"
+      @click="handleItemClick"
     >
-        <div class="flex justify-between items-center min-h-[5rem]">
-            <div class="flex-1">
-                <div class="flex gap-0 items-center h-full">
-                    <div class="w-64 shrink-0">
-                        <h3 class="font-medium text-gray-800 dark:text-gray-200">{{ truncatedName }}</h3>
-                        <div class="mt-1">
-                            <p class="text-sm text-gray-500 dark:text-gray-400">
-                                {{ item?.frequency || 'Sin frecuencia' }}
-                            </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">
-                                ID: {{ item?.id || 'Sin ID' }}
-                            </p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 dark:text-gray-300 flex-1 self-center">
-                        {{ truncatedDescription }}
-                    </p>
-                </div>
+      <div class="flex justify-between items-center min-h-[5rem]">
+        <div class="flex-1">
+          <div class="flex gap-0 items-center h-full">
+            <div class="w-64 shrink-0">
+              <h3 class="font-medium text-gray-800 dark:text-gray-200">{{ truncatedName }}</h3>
+              <div class="mt-1">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                  {{ item?.frequency || "Sin frecuencia" }}
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">ID: {{ item?.id || "Sin ID" }}</p>
+              </div>
             </div>
-            <div class="flex items-center gap-16">
-                <div class="w-20 relative flex justify-center items-center">
-                    <Switch
-                        :modelValue="localState"
-                        @update:modelValue="handleStateChange"
-                    />
-                </div>
-                <div class="w-20 flex justify-center gap-2">
-                    <!-- Botón de imagen -->
-                    <button
-                        class="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
-                        :class="{
-                            'bg-blue-500 hover:bg-blue-600 text-white': !isDarkMode,
-                            'bg-blue-700 hover:bg-blue-800 text-gray-200': isDarkMode
-                        }"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                    </button>
-                    <!-- Botón de mensaje -->
-                    <button
-                        class="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
-                        :class="{
-                            'bg-blue-500 hover:bg-blue-600 text-white': !isDarkMode,
-                            'bg-blue-700 hover:bg-blue-800 text-gray-200': isDarkMode
-                        }"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+            <p class="text-gray-600 dark:text-gray-300 flex-1 self-center">{{ truncatedDescription }}</p>
+          </div>
         </div>
+        <div class="flex items-center gap-16">
+          <div class="w-20 relative flex justify-center items-center">
+            <Switch
+                v-if="typeSwitch === 2 || typeSwitch === 0"
+                :modelValue="localState"
+                @click.stop="() => openConfirmationModal(localState, 2)"
+            />
+
+            <SwitchThreePhase
+                v-else-if="typeSwitch === 3"
+                :modelValue="localState"
+                @click.stop="(event) => {
+                    const position = getSwitchPosition(event);  // Función para obtener la posición
+                    openConfirmationModal(position, 3);  // Pasar la posición y el tipo de switch
+                }"
+            />
+
+
+          </div>
+          <div class="w-20 flex justify-center gap-2">
+            <button
+              v-for="(icon, index) in icons"
+              :key="index"
+              class="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+              :class="{
+                'bg-blue-500 hover:bg-blue-600 text-white': !isDarkMode,
+                'bg-blue-700 hover:bg-blue-800 text-gray-200': isDarkMode,
+              }"
+              @click.stop="icon.action"
+            >
+              <span v-html="icon.svg"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Modal de Confirmación -->
+      <ModalDynamic
+        v-if="isModalVisible"
+        :title="'Confirmar cambio de estado'"
+        :message="'¿Estás seguro de que deseas cambiar el estado?'"
+        :show="true"
+        :config="{
+          buttons: [
+            { text: 'Aceptar', type: 'primary', action: confirmStateChange },
+            { text: 'Cancelar', type: 'secondary', action: closeModal },
+          ],
+        }"
+        @update:show="isModalVisible = $event"
+      />
     </div>
 </template>
-
+  
 <script setup>
-import { computed, ref, defineEmits, defineProps } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed, defineProps, defineEmits } from "vue";
+import { useRouter } from "vue-router"; // Importamos useRouter de Vue Router
 import Switch from "@/components/inputs/Switch.vue";
+import SwitchThreePhase from "@/components/inputs/SwitchThreePhase.vue";
+import ModalDynamic from "@/components/utils/ModalDynamic.vue";
 
-// Propiedades
+// Configuración de props y emits
 const props = defineProps({
-    item: Object, // Información del ítem
-    clickable: {
-        type: Boolean,
-        default: false, // Define si el ítem es clickeable
-    },
-    baseRoute: {
-        type: String,
-        default: "", // Ruta base opcional
-    },
+  item: Object,
+  clickable: {
+    type: Boolean,
+    default: false,
+  },
+  baseRoute: {
+    type: String,
+    default: "",
+  },
+  icons: {
+    type: Array,
+    default: () => [],
+  },
+  typeSwitch: {
+    type: Number,
+    default: 0,
+  },
 });
 
-// Eventos emitidos
 const emit = defineEmits(["update:status"]);
+const router = useRouter(); // Usamos useRouter para obtener el router
 
-// Estado local del switch
+// Variables reactivas
 const localState = ref(props.item?.state || "completed");
+const isModalVisible = ref(false);
+const pendingStateChange = ref(null);
+const switchTypeRef = ref(null);
+const isDarkMode = ref(false);
 
-// Cálculo del nombre truncado
+// Cálculos para el nombre y la descripción truncados
 const truncatedName = computed(() => {
-    if (!props.item?.name) return "Sin nombre";
-    return props.item.name.length > 25
-        ? props.item.name.substring(0, 25) + "..."
-        : props.item.name;
+  if (!props.item?.name) return "Sin nombre";
+  return props.item.name.length > 25
+    ? props.item.name.substring(0, 25) + "..."
+    : props.item.name;
 });
 
-// Cálculo de la descripción truncada
 const truncatedDescription = computed(() => {
-    if (!props.item?.description) return "Sin descripción";
-    return props.item.description.length > 140
-        ? props.item.description.substring(0, 140) + "..."
-        : props.item.description;
+  if (!props.item?.description) return "Sin descripción";
+  return props.item.description.length > 140
+    ? props.item.description.substring(0, 140) + "..."
+    : props.item.description;
 });
 
-// Manejo de cambios de estado
-const handleStateChange = (newValue) => {
-    localState.value = newValue;
-    emit("update:status", { id: props.item.id, state: newValue });
+// Función para manejar el clic en el item
+const handleItemClick = () => {
+  // Verificamos si el modal está visible. Si lo está, no ejecutamos la navegación.
+  if (props.clickable && props.baseRoute && props.item?.id && !isModalVisible.value) {
+    const fullRoute = `${props.baseRoute}/${props.item.id}`;
+    router.push(fullRoute); // Navegamos usando router.push
+  }
 };
 
-// Propiedad computada para detectar el tema oscuro
-const isDarkMode = computed(() =>
-    document.documentElement.classList.contains("dark")
-);
 
-// Router para manejar la navegación
-const router = useRouter();
 
-// Manejo del clic en el ítem
-const handleItemClick = () => {
-    if (props.clickable && props.baseRoute && props.item?.id) {
-        const fullRoute = `${props.baseRoute}/${props.item.id}`;
-        router.push(fullRoute);
+// Función para abrir el modal de confirmación
+const openConfirmationModal = (position, switchType) => {
+  let newState = "";
+  if (switchType === 3) {
+    if (position === "left") {
+      newState = "completed";
+    } else if (position === "center") {
+      newState = "neutro";
+    } else if (position === "right") {
+      newState = "failed";
     }
+  } else if (switchType === 2 || switchType === 0) {
+    newState = localState.value === "completed" ? "failed" : "completed";
+  }
+
+  pendingStateChange.value = newState;
+  switchTypeRef.value = switchType;
+  isModalVisible.value = true;
+};
+
+// Función para confirmar el cambio de estado
+const confirmStateChange = () => {
+  localState.value = pendingStateChange.value;
+  emit("update:status", { id: props.item.id, state: localState.value });
+  closeModal();
+};
+
+// Función para cerrar el modal
+const closeModal = () => {
+  isModalVisible.value = false;
+  pendingStateChange.value = null;
+};
+
+// Función para obtener la posición del clic en el switch de tres fases
+const getSwitchPosition = (event) => {
+  const switchElement = event.target;
+  const rect = switchElement.getBoundingClientRect();
+  const clickPosition = event.clientX - rect.left;
+  const switchWidth = rect.width;
+
+  const leftLimit = switchWidth / 3;
+  const rightLimit = 2 * switchWidth / 3;
+
+  if (clickPosition < leftLimit) {
+    return "left";
+  } else if (clickPosition < rightLimit) {
+    return "center";
+  } else {
+    return "right";
+  }
 };
 </script>

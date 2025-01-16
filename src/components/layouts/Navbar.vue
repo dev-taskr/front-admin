@@ -3,7 +3,7 @@
     class="py-4 px-6 bg-gray-800 text-white dark:bg-gray-700 dark:text-gray-200"
   >
     <!-- Contenedor centrado y con ancho máximo -->
-    <div class="max-w-screen-xl mx-auto flex justify-between items-center w-full">
+    <div class="max-w-[1200px] mx-auto flex justify-between items-center w-full">
       <!-- Logo -->
       <div class="logo">
         <Logo />

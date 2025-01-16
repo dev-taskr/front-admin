@@ -1,5 +1,5 @@
 <template>
-    <img src="@/assets/taskr_logo.svg" alt="Taskr Logo" class="logo" />
+    <img src="@/assets/taskr_logo.svg" alt="Taskr Logo" class="logo" style="width: 150px !important;" />
 </template>
   
 <script>
