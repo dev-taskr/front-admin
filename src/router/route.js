@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from '@/views/Login.vue';
 import Dashboard from '@/views/Dashboard.vue';
 import Empresas from '@/views/Empresas.vue';
+import Tasks from '@/views/Tasks.vue';
 
 const routes = [
   { path: '/', name: 'Login', component: Login },
@@ -15,6 +16,12 @@ const routes = [
     path: '/empresas', 
     name: 'Empresas', 
     component: Empresas, 
+    /* meta: { requiresAuth: true }, */ // Marca esta ruta como protegida
+  },
+  { 
+    path: '/tasks', 
+    name: 'Tasks', 
+    component: Tasks, 
     /* meta: { requiresAuth: true }, */ // Marca esta ruta como protegida
   },
 ];

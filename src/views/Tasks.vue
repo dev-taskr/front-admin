@@ -1,15 +1,16 @@
 <template>
     <BaseLayout>
       <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        <div class="max-w-[1200px] mx-auto">
+        <Filters />
+        <div class=" mx-auto"><!-- max-w-[1200px] -->
           <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <div class="border-b pb-4 border-gray-200 dark:border-gray-700">
               <div class="flex items-center pl-4 pr-4">
                 <div class="w-64 shrink-0">
-                  <h2 class="font-medium text-gray-700 dark:text-gray-300">Nombre Empresa</h2>
+                  <h2 class="font-medium text-gray-700 dark:text-gray-300">Tareas</h2>
                 </div>
                 <div class="flex-1">
-                  <h2 class="font-medium text-gray-700 dark:text-gray-300">Razon Social</h2>
+                  <h2 class="font-medium text-gray-700 dark:text-gray-300">Descripción Corta</h2>
                 </div>
                 <div class="flex items-center gap-16">
                   <h2 class="font-medium text-gray-700 dark:text-gray-300 w-20 text-center">Estado</h2>
@@ -25,7 +26,7 @@
                 :clickable="true"
                 baseRoute="/empresas"
                 :icons="getIconsForRow(row)"
-                :typeSwitch="2"
+                :typeSwitch="3"
                 @update:status="updateRowStatus"
               />
             </div>
@@ -49,6 +50,7 @@
   import BaseLayout from "@/components/layouts/Layout.vue";
   import Table from "@/components/utils/Table.vue";
   import ModalDynamic from "@/components/utils/ModalDynamic.vue"; // Importar el modal dinámico
+  import Filters from "@/components/utils/Filters.vue";
   
   const rows = ref([
     {
@@ -122,7 +124,7 @@
           id: "state",
           name: "state",
           label: "Estado",
-          type: "Switch",
+          type: "SwitchThreePhase",
           value: "completed",
           options: ["completed", "neutro", "failed"], // Opciones para el switch
         },

@@ -1,6 +1,6 @@
 <template>
     <div
-      class="grid gap-4 p-6 justify-center"
+      class="grid gap-4 p-4 justify-center"
       :class="{
         'grid-cols-4': layout === 'left', // Cuatro columnas para la izquierda
         'grid-cols-2': layout === 'right', // Dos columnas para la derecha
@@ -10,7 +10,7 @@
         v-for="(buttonsGrid, index) in limitedButtonsGrids"
         :key="index"
         @click="navigateTo(buttonsGrid.route)"
-        class="flex flex-col items-center justify-center p-6 bg-gray-100 rounded-lg shadow hover:shadow-md transition cursor-pointer w-full max-w-[200px] bg-white dark:bg-gray-800"
+        class="flex flex-col items-center justify-center p-4 bg-gray-100 rounded-lg shadow hover:shadow-md transition cursor-pointer w-full max-w-[200px] bg-white dark:bg-gray-800"
       >
         <!-- Contenedor del ícono más grande -->
         <div class="w-20 h-20 flex items-center justify-center bg-teal-100 rounded-full">

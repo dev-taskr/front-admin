@@ -1,5 +1,5 @@
 <template>
-    <div :class="theme" class="flex items-center justify-between p-4">
+    <div :class="theme" class="flex items-center justify-between p-4 mb-4">
       <!-- Botones -->
       <div class="flex gap-4">
         <button class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">

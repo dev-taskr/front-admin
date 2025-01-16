@@ -2,7 +2,7 @@
   <BaseLayout>
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
       <Filters />
-      <div class="max-w-[1200px] mx-auto">
+      <div class=" mx-auto"><!-- max-w-[1200px] -->
         <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
           <div class="border-b pb-4 border-gray-200 dark:border-gray-700">
             <div class="flex items-center pl-4 pr-4">

@@ -30,7 +30,7 @@ const buttonsGridsLeft = ref([
 ]);
 
 const buttonsGridsRight = ref([
-  { name: 'Lista de Tareas', route: '/notifications', icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10h6"></path><path d="M9 14h6"></path><path d="M21 16v-2a4 4 0 00-3-3.87"></path><path d="M12 12a4 4 0 00-4 4v2"></path></svg>' },
+  { name: 'Lista de Tareas', route: '/tasks', icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10h6"></path><path d="M9 14h6"></path><path d="M21 16v-2a4 4 0 00-3-3.87"></path><path d="M12 12a4 4 0 00-4 4v2"></path></svg>' },
   { name: 'Cumplimientos', route: '/statistics', icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18v-6"></path><path d="M10 18V10"></path><path d="M14 18v-4"></path><path d="M18 18V8"></path></svg>' },
 ]);
 
