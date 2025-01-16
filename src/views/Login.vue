@@ -84,7 +84,7 @@ import Label from "@/components/inputs/Label.vue";
 import Input from "@/components/inputs/Input.vue";
 import Checkbox from "@/components/inputs/Checkbox.vue";
 import Button from "@/components/inputs/Button.vue";
-import authService from "@/services/auth/authService"; // Importa authService
+import authService from "@/services/auth/AuthService"; // Línea corregida
 import ModalMessage from "@/components/utils/ModalMessage.vue"; // Importa ModalMessage
 
 const router = useRouter();
