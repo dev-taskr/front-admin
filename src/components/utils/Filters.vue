@@ -8,7 +8,7 @@
         <button class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
           Ir a Cumplimiento
         </button>
-        <button class="px-4 py-2 bg-teal-500 text-white rounded-full flex items-center gap-2 hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
+        <button @click="handleBackClick()" class="px-4 py-2 bg-teal-500 text-white rounded-full flex items-center gap-2 hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -74,13 +74,21 @@
   
   <script setup>
   import { ref } from "vue";
+  import { useRouter } from "vue-router"; // Importamos useRouter de Vue Router
   
   // Variables reactivas
   const selectedDate = ref("");
   const selectedSucursal = ref("sucursal1");
+  const router = useRouter(); // Usamos useRouter para obtener el router
   
   // Tema (claro/oscuro automático según la clase en el <html>)
   const theme = ref("light");
+
+  const handleBackClick = () => {
+    const previousRoute = localStorage.getItem('previousRoute');
+    console.log(previousRoute); // Verás la ruta anterior
+    router.push(previousRoute);
+};
   </script>
   
   <style scoped>

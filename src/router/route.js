@@ -33,8 +33,14 @@ const router = createRouter({
 
 // Agrega la guardia de navegación global
 router.beforeEach((to, from, next) => {
-  const user = JSON.parse(localStorage.getItem('user')); // Obtén el usuario del localStorage
+  // Obtén el usuario del localStorage
+  const user = JSON.parse(localStorage.getItem('user'));
   
+  // Guarda la ruta anterior en localStorage
+  if (from.path) {
+    localStorage.setItem('previousRoute', from.path);
+  }
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // Si la ruta requiere autenticación y no hay usuario, redirige a Login
     if (!user) {
