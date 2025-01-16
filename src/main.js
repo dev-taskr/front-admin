@@ -1,6 +1,6 @@
-import { createApp } from '/node_modules/vue/dist/vue.esm-bundler.js'
+import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router/route'
+import router from './router/route.js'
 import "./style.css"
 
 // Aplica el tema antes de inicializar Vue
