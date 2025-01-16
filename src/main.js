@@ -1,20 +1,19 @@
-import { createApp } from 'vue';
-import App from './App.vue';
-import router from './router/route';
-import "./style.css";
+import { createApp } from '/node_modules/vue/dist/vue.esm-bundler.js'
+import App from './App.vue'
+import router from './router/route'
+import "./style.css"
 
 // Aplica el tema antes de inicializar Vue
-const savedTheme = localStorage.getItem("theme");
+const savedTheme = localStorage.getItem("theme")
 if (savedTheme === "dark") {
-  document.documentElement.classList.add("dark");
+  document.documentElement.classList.add("dark")
 } else {
-  document.documentElement.classList.remove("dark");
+  document.documentElement.classList.remove("dark")
 }
 
 // Crea la aplicación y aplica configuraciones
-const app = createApp(App);
+const app = createApp(App)
 
-app.use(router);
+app.use(router)
 
-app.mount('#app');
-
+app.mount('#app')
