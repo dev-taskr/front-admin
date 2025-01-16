@@ -6,18 +6,19 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      'vue': './node_modules/vue/dist/vue.esm-bundler.js'
+      '@': path.resolve(__dirname, './src')
     }
   },
   build: {
     sourcemap: true,
-    outDir: 'dist',
     assetsDir: 'assets',
     rollupOptions: {
-      external: [],
       output: {
-        manualChunks: undefined
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return 'vendor'
+          }
+        }
       }
     }
   }
