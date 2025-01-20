@@ -10,7 +10,7 @@
       </div>
 
       <!-- Nombre de Empresa -->
-      <CompanyName :companyName="companyStore.selectedCompany" />
+      <CompanyName :companyName="companyStore.selectedCompany.name" />
 
       <!-- Componente Dropdown -->
       <Dropdown>

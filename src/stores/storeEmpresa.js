@@ -2,11 +2,12 @@ import { defineStore } from 'pinia';
 
 export const useCompanyStore = defineStore('company', {
   state: () => ({
-    selectedCompany: '', // Almacena el nombre de la empresa seleccionada
+    selectedCompany: [], // Almacena el nombre de la empresa seleccionada
   }),
   actions: {
-    setCompany(name) {
-      this.selectedCompany = name;
+    setCompany(data) {
+      this.selectedCompany = data;
+      localStorage.setItem('selectedCompany', JSON.stringify(data));
     },
   },
 });

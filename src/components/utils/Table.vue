@@ -139,7 +139,7 @@
   // Función para manejar el clic en el ítem
     const handleItemClick = () => {
         if (props.clickable && props.baseRoute && props.item?.id && !isModalVisible.value) {
-            companyStore.setCompany(props.item.name);
+            companyStore.setCompany(props.item);
             const fullRoute = `${props.baseRoute}/${props.item.id}`;
             router.push(fullRoute);
         }
