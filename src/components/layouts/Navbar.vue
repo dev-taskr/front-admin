@@ -10,7 +10,7 @@
       </div>
 
       <!-- Nombre de Empresa -->
-      <CompanyName :companyName="companyName" />
+      <CompanyName :companyName="companyStore.selectedCompany" />
 
       <!-- Componente Dropdown -->
       <Dropdown>
@@ -43,10 +43,11 @@ import { useRouter } from "vue-router";
 import Logo from "@/components/layouts/Logo.vue";
 import Dropdown from "@/components/layouts/Dropdown.vue";
 import CompanyName from "@/components/layouts/CompanyName.vue"; // Importamos el nuevo componente
+import { useCompanyStore } from '@/stores/storeEmpresa';
 
 const router = useRouter();
 const username = ref("Usuario");
-const companyName = ref("NOMBRE DE EMPRESA"); // Aquí se define el nombre de la empresa
+const companyStore = useCompanyStore(); 
 
 const logout = () => {
   localStorage.removeItem("user");

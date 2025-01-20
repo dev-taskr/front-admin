@@ -15,13 +15,28 @@
         {{ title }}
       </h3>
 
-      <!-- Mensaje -->
-      <p v-if="!config" class="text-gray-700 dark:text-gray-300 mb-4">
-        {{ message }}
-      </p>
+      <!-- Visualización de imágenes -->
+      <div v-if="config.images && !config.fields && !config.buttons" class="mb-4">
+        <div class="grid grid-cols-2 gap-2">
+          <img
+            v-for="(image, index) in config.images"
+            :key="index"
+            :src="image"
+            alt="Modal Image"
+            class="w-full h-auto rounded-md shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+            @click="viewImage(image)"
+          />
+        </div>
+      </div>
+
 
       <!-- Configuración dinámica -->
       <div v-else>
+        <!-- Mensaje -->
+        <p v-if="config.message" class="text-gray-700 dark:text-gray-300 mb-4">
+          {{ config.message }}
+        </p>
+        
         <p v-if="config.description" class="text-gray-700 dark:text-gray-300 mb-4">
           {{ config.description }}
         </p>

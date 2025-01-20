@@ -2,13 +2,13 @@
     <div :class="theme" class="flex items-center justify-between p-4 mb-4">
       <!-- Botones -->
       <div class="flex gap-4">
-        <button class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
+        <button v-if="dashboard" @click="goToDashboard()" class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
           Inicio
         </button>
-        <button class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
+        <button v-if="ircumplimiento" class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
           Ir a Cumplimiento
         </button>
-        <button @click="handleBackClick()" class="px-4 py-2 bg-teal-500 text-white rounded-full flex items-center gap-2 hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
+        <button v-if="back" @click="handleBackClick()" class="px-4 py-2 bg-teal-500 text-white rounded-full flex items-center gap-2 hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5"
@@ -24,7 +24,7 @@
       </div>
   
       <!-- Selector de sucursal -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2"  v-if="sucursal">
         <label for="sucursal" class="text-gray-700 dark:text-gray-300">Sucursal:</label>
         <div class="relative">
           <select
@@ -40,7 +40,7 @@
       </div>
   
       <!-- Campo de fecha -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2" v-if="periodo">
         <label for="periodo" class="text-gray-700 dark:text-gray-300">Periodo:</label>
         <input
           type="date"
@@ -51,7 +51,7 @@
       </div>
   
       <!-- Botón de búsqueda -->
-      <button
+      <button v-if="search" 
         class="p-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800"
       >
         <svg
@@ -73,9 +73,18 @@
   </template>
   
   <script setup>
-  import { ref } from "vue";
+  import { ref, computed, defineProps, defineEmits } from "vue";
   import { useRouter } from "vue-router"; // Importamos useRouter de Vue Router
   
+  const props = defineProps({
+    dashboard: Boolean,
+    ircumplimiento: Boolean,
+    back: Boolean,
+    sucursal: Boolean,
+    periodo: Boolean,
+    search: Boolean,
+  });
+
   // Variables reactivas
   const selectedDate = ref("");
   const selectedSucursal = ref("sucursal1");
@@ -86,8 +95,11 @@
 
   const handleBackClick = () => {
     const previousRoute = localStorage.getItem('previousRoute');
-    console.log(previousRoute); // Verás la ruta anterior
     router.push(previousRoute);
+};
+
+const goToDashboard = () => {
+    router.push({name: 'Dashboard'});
 };
   </script>
   

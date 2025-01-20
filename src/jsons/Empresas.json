@@ -1,0 +1,26 @@
+[
+  {
+    "id": "202501130000001a",
+    "name": "Tech Innovators LLC",
+    "description": "Empresa dedicada al desarrollo de software y tecnología innovadora.",
+    "state": "completed"
+  },
+  {
+    "id": "202501130000002b",
+    "name": "EcoGreen Solutions",
+    "description": "Proveedor de soluciones sostenibles para energías renovables.",
+    "state": "completed"
+  },
+  {
+    "id": "202501130000003c",
+    "name": "Global Traders Co.",
+    "description": "Empresa especializada en importación y exportación de bienes de consumo.",
+    "state": "completed"
+  },
+  {
+    "name": "prueba 1",
+    "description": "prueba 123456",
+    "state": "completed",
+    "id": "1737293454015"
+  }
+]
