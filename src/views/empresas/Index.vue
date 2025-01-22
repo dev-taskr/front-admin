@@ -1,7 +1,7 @@
 <template>
     <BaseLayout :title="'Lista de Empresas'">
       <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        <Filters :dashboard="true" :ircumplimiento="true" :back="true" :sucursal="true" :search="true" :periodo="true"/>
+        <Filters :dashboard="true" :ircumplimiento="false" :back="true" :sucursal="false" :search="true" :periodo="false"/>
         <div class="mx-auto">
           <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
             <div class="border-b pb-4 border-gray-200 dark:border-gray-700 flex justify-between items-center">
@@ -21,6 +21,7 @@
                 :key="row.id"
                 :item="row"
                 :clickable="true"
+                :borderColor="false"
                 baseRoute="/empresas/detail"
                 :icons="getIconsForRow(row)"
                 :typeSwitch="2"
@@ -37,6 +38,7 @@
         :message="modalMessage"
         :show="isModalVisible"
         :config="modalConfig"
+        @update-dependent="handleUpdateDependent"
         @update:show="isModalVisible = $event"
       />
     </BaseLayout>
@@ -60,11 +62,44 @@
   const modalTitle = ref("");
   const modalMessage = ref("");
   const isEditMode = ref(false);
+
+  const fileName = "Empresas.json";
+  const fileNameRegionesComunas = "RegionesComunas.json";
+
+  const regionesComunas = ref([]);
+
+  const loadRegionesComunas = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/data/${fileNameRegionesComunas}`);
+      regionesComunas.value = response.data.regiones;
+      
+    } catch (error) {
+      console.error('Error al cargar el archivo de regiones y comunas:', error);
+    }
+  };
+
+  const handleUpdateDependent = ({ id, value }) => {
+    if (id === "comuna") {
+      // Filtrar comunas según la región seleccionada
+      const region = regionesComunas.regiones.find((reg) => reg.nombre === value);
+      const comunas = region ? region.comunas : [];
+
+      // Buscar el campo comuna y actualizar sus opciones
+      const comunaField = modalConfig.value.fields.find((field) => field.id === "comuna");
+      if (comunaField) {
+        comunaField.options = comunas.map((comuna) => ({
+          value: comuna,
+          label: comuna,
+        }));
+        comunaField.value = ""; // Reiniciar el valor
+      }
+    }
+  };
   
   // Cargar datos desde el archivo JSON
   const loadCompanies = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/data");
+      const response = await axios.get(`http://localhost:3000/api/data/${fileName}`);
       rows.value = response.data;
     } catch (error) {
       console.error("Error al cargar el archivo JSON:", error);
@@ -80,7 +115,7 @@
       );
   
       console.log('Enviando los siguientes datos al servidor:', uniqueRows);
-      await axios.post("http://localhost:3000/api/data", uniqueRows); 
+      await axios.post("http://localhost:3000/api/data/${fileName}", uniqueRows); 
     } catch (error) {
       console.error("Error al guardar en el archivo JSON:", error);
     }
@@ -96,6 +131,14 @@
       message: "Completa los datos para agregar una nueva empresa.",
       fields: [
         {
+          id: "rut",
+          name: "rut",
+          label: "Rut",
+          type: "text",
+          value: "",
+          placeholder: "Ingresa el rut de la empresa",
+        },
+        {
           id: "name",
           name: "name",
           label: "Nombre",
@@ -104,12 +147,49 @@
           placeholder: "Ingresa el nombre de la empresa",
         },
         {
+          id: "razon_social",
+          name: "razon_social",
+          label: "Razon Social",
+          type: "text",
+          value: "",
+          placeholder: "Ingresa la razon social de la empresa",
+        },
+        {
+          id: "region",
+          name: "region",
+          label: "Region",
+          type: "select",
+          options: [
+            { value: "option1", label: "Opción 1" },
+            { value: "option2", label: "Opción 2" },
+            { value: "option3", label: "Opción 3" },
+          ],
+          value: "",
+          placeholder: "Seleccione",
+        },
+        {
+          id: "comuna",
+          name: "comuna",
+          label: "Comuna",
+          type: "select",
+          value: "",
+          placeholder: "Seleccione",
+        },
+        {
           id: "description",
           name: "description",
           label: "Descripción",
           type: "textarea",
           value: "",
           placeholder: "Ingresa la descripción de la empresa",
+        },
+        {
+          id: "responsable",
+          name: "responsable",
+          label: "Responsable",
+          type: "select",
+          value: "",
+          placeholder: "Seleccione",
         },
         {
           id: "state",
@@ -148,6 +228,14 @@
       message: "Edita los detalles de la empresa.",
       fields: [
         {
+          id: "rut",
+          name: "rut",
+          label: "Rut",
+          type: "text",
+          value: row.rut,
+          placeholder: "Ingresa el rut de la empresa",
+        },
+        {
           id: "name",
           name: "name",
           label: "Nombre",
@@ -156,12 +244,50 @@
           placeholder: "Ingresa el nombre",
         },
         {
+          id: "razon_social",
+          name: "razon_social",
+          label: "Razon Social",
+          type: "text",
+          value: row.razon_social,
+          placeholder: "Ingresa la razon social de la empresa",
+        },
+        {
+          id: "region",
+          name: "region",
+          label: "Region",
+          type: "select",
+          value: row.region,
+          placeholder: "Seleccione",
+          options: regionesComunas.value?.map((region) => ({
+            value: region.numero,
+            label: region.nombre,
+          })) || [],         
+          dependentId: "comuna",
+        },
+        {
+          id: "comuna",
+          name: "comuna",
+          label: "Comuna",
+          type: "select",
+          value: row.comuna,
+          options: [],
+          placeholder: "Seleccione", 
+        },
+        {
           id: "description",
           name: "description",
           label: "Descripción",
           type: "textarea",
           value: row.description,
           placeholder: "Ingresa la descripción",
+        },
+        {
+          id: "responsable",
+          name: "responsable",
+          label: "Responsable",
+          type: "select",
+          value: row.responsable,
+          placeholder: "Seleccione",
         },
         {
           id: "state",
@@ -292,6 +418,7 @@
   
   // Cargar los datos al montar el componente
   onMounted(loadCompanies);
+  onMounted(loadRegionesComunas);
   
   </script>
   

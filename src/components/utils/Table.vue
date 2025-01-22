@@ -2,10 +2,10 @@
     <div
       class="bg-white dark:bg-gray-800 rounded-lg border-2 p-4 transition-colors duration-200"
       :class="{
-        'border-green-500': localState === 'completed',
-        'border-red-500': localState === 'failed',
-        'border-gray-500': localState === 'neutro',
         'cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700': clickable,
+        'border-green-500': borderColor && localState === 'completed',
+        'border-red-500': borderColor && localState === 'failed',
+        'border-gray-500': borderColor && localState === 'neutro',
       }"
       @click="handleItemClick"
     >
@@ -104,6 +104,10 @@
       type: Number,
       default: 0,
     },
+    borderColor: {
+      type: Boolean,
+      default: false
+    }
   });
   
   const emit = defineEmits(["update:status"]);

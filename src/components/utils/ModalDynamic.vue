@@ -53,7 +53,7 @@
 
             <!-- Renderizar el campo adecuado según su tipo -->
             <component
-              v-if="field.type === 'text' || field.type === 'textarea'"
+              v-if="field.type === 'text' || field.type === 'textarea' || field.type === 'select'"
               :is="getComponent(field.type)"
               :field="field"
               :id="field.id || field.name"
@@ -115,6 +115,7 @@ import Textarea from "@/components/inputs/Textarea.vue"; // Componente Textarea
 import SwitchThreePhase from "@/components/inputs/SwitchThreePhase.vue"; // Componente SwitchThreePhase
 import Switch from "@/components/inputs/Switch.vue"; // Componente SwitchThreePhase
 import Label from "@/components/inputs/Label.vue"; // Componente Label
+import SelectInput from "@/components/inputs/Select.vue"; // Componente Select
 
 // Definir las props que se pasan al modal
 const props = defineProps({
@@ -156,6 +157,7 @@ const getComponent = (type) => {
   if (type === "text") return Input;
   if (type === "textarea") return Textarea;
   if (type === "switchThreePhase") return SwitchThreePhase;
+  if (type === "select") return SelectInput;
   return null;
 };
 

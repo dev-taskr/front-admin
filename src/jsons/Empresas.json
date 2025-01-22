@@ -1,26 +1,57 @@
 [
   {
     "id": "202501130000001a",
+    "rut": "123456789-k",
     "name": "Tech Innovators LLC",
+    "razon_social": "razon social prueba",
+    "region": "RM",
+    "comuna": 2,
     "description": "Empresa dedicada al desarrollo de software y tecnología innovadora.",
+    "responsable": "Yerson Retamal",
     "state": "completed"
   },
   {
     "id": "202501130000002b",
+    "rut": "123456789-k",
     "name": "EcoGreen Solutions",
+    "razon_social": "razon social prueba",
+    "region": "RM",
+    "comuna": 2,
     "description": "Proveedor de soluciones sostenibles para energías renovables.",
+    "responsable": "Yerson Retamal",
     "state": "completed"
   },
   {
     "id": "202501130000003c",
+    "rut": "123456789-k",
     "name": "Global Traders Co.",
+    "razon_social": "razon social prueba",
+    "region": "RM",
+    "comuna": 2,
     "description": "Empresa especializada en importación y exportación de bienes de consumo.",
+    "responsable": "Yerson Retamal",
     "state": "completed"
   },
   {
+    "id": "1737293454015",
+    "rut": "123456789-k",
     "name": "prueba 1",
+    "razon_social": "razon social prueba",
+    "region": "RM",
+    "comuna": 2,
     "description": "prueba 123456",
-    "state": "completed",
-    "id": "1737293454015"
+    "responsable": "Yerson Retamal",
+    "state": "completed"
+  },
+  {
+    "id": "1737426171562",
+    "rut": "123456789-k",
+    "name": "yerson 2",
+    "razon_social": "razon social prueba",
+    "region": "RM",
+    "comuna": 2,
+    "description": "prueba yerson",
+    "responsable": "Yerson Retamal",
+    "state": "completed"
   }
 ]

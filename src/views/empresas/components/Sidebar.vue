@@ -66,7 +66,7 @@
         v-if="!isCollapsed"
         class="text-gray-600 dark:text-gray-400 text-sm text-center"
       >
-        ID: {{ companyData.id }}
+        Rut: {{ companyData.rut }}
       </span>
     </div>
 
@@ -75,7 +75,8 @@
       v-if="!isCollapsed"
       class="p-4 text-sm text-gray-600 dark:text-gray-400"
     >
-      <p>Razón Social: {{ companyData.description }}</p>
+      <p>Razón Social: {{ companyData.razon_social }}</p>
+      <p>Responsable: {{ companyData.responsable }}</p>
       <p>Estado: {{ companyData.state }}</p>
     </div>
 
@@ -92,21 +93,42 @@
         </li>
       </ul>
     </nav>
+    <hr>
+    <nav class="mt-4">
+      <ul>
+        <li
+          class="flex items-center p-4 hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer"
+        >
+          <span class="flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10h6"></path><path d="M9 14h6"></path><path d="M21 16v-2a4 4 0 00-3-3.87"></path><path d="M12 12a4 4 0 00-4 4v2"></path></svg>
+          </span>
+          <span v-if="!isCollapsed" class="ml-3">Lista de Tareas</span>
+        </li>
+        <li
+          class="flex items-center p-4 hover:bg-gray-300 dark:hover:bg-gray-700 cursor-pointer"
+        >
+          <span class="flex-shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18v-6"></path><path d="M10 18V10"></path><path d="M14 18v-4"></path><path d="M18 18V8"></path></svg>
+          </span>
+          <span v-if="!isCollapsed" class="ml-3">Cumplimientos</span>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
-import { useCompanyStore } from "@/stores/storeEmpresa.js";
 
 // Estado del sidebar (colapsado o expandido)
 const isCollapsed = ref(false);
 
-// Acceso al store de Pinia
-const companyStore = useCompanyStore();
+// Leer datos de la empresa desde localStorage
+const storedCompany = localStorage.getItem("selectedCompany");
+const companyDataRef = ref(storedCompany ? JSON.parse(storedCompany) : {});
 
-// Datos de la empresa desde el store
-const companyData = computed(() => companyStore.selectedCompany);
+// Datos de la empresa como un `computed` para compatibilidad
+const companyData = computed(() => companyDataRef.value);
 
 // Iniciales del nombre de la empresa
 const initials = computed(() =>
@@ -152,6 +174,7 @@ const toggleSidebar = () => {
   isCollapsed.value = !isCollapsed.value;
 };
 </script>
+
 
 <style>
 </style>
