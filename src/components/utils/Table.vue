@@ -144,7 +144,7 @@
     const handleItemClick = () => {
         if (props.clickable && props.baseRoute && props.item?.id && !isModalVisible.value) {
             companyStore.setCompany(props.item);
-            const fullRoute = `${props.baseRoute}/${props.item.id}`;
+            const fullRoute = `${props.baseRoute}/${props.item.id}/empresadashboard`;
             router.push(fullRoute);
         }
     };

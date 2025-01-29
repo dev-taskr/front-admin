@@ -1,9 +1,15 @@
 <template>
+  <div>
+    <!-- Div superior que contiene los mensajes truncados con scrollbar -->
+    <Post :posts="posts"/>
+
+
+    <!-- Tarjetas -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <div
         v-for="card in cards"
         :key="card.id"
-        class="p-4 bg-white dark:bg-gray-800 shadow rounded-lg flex flex-col items-center transition-colors duration-300"
+        class="p-4 bg-gray-300 dark:bg-gray-800 shadow rounded-lg flex flex-col items-center transition-colors duration-300 border border-gray-400 dark:border-gray-600"
       >
         <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300">
           {{ card.title }}
@@ -24,21 +30,26 @@
         </p>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, computed, defineProps, defineEmits } from "vue";
+  </div>
+</template>
 
-  // Declaramos las props directamente en `script setup`
-  const props = defineProps({
-    cards: {
-      type: Array,
-      required: true,
-    },
-  });
-  </script>
-  
-  <style scoped>
-  /* Estilos personalizados para las tarjetas */
-  </style>
-  
+<script setup>
+import { ref, defineProps } from "vue";
+import Post from "@/views/empresas/components/Post.vue"
+
+const props = defineProps({
+  cards: {
+    type: Array,
+    required: true,
+  },
+  posts: {
+    type: Array,
+    required: true,
+  },
+});
+
+</script>
+
+<style scoped>
+/* Puedes agregar estilos personalizados si es necesario */
+</style>

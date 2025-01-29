@@ -58,6 +58,7 @@
               :field="field"
               :id="field.id || field.name"
               v-model="field.value"
+              @update-dependent="$emit('update-dependent', $event)"
             />
 
             <!-- Renderizar Switch Three Phase -->
@@ -70,6 +71,26 @@
               v-if="field.type === 'Switch'"
               v-model="field.value"
               :isLocked="false"
+            />
+
+            <!-- Renderizar etiquetas P, Span, H -->
+            <Paragraph
+              v-if="field.type === 'p'"
+              :html="field.html"
+              :customClass="field.customClass"
+            />
+
+            <Sp
+              v-if="field.type === 'span'"
+              :html="field.html"
+              :customClass="field.customClass"
+            />
+
+            <Heading
+              v-if="field.type === 'h'"
+              :level="field.level"
+              :html="field.html"
+              :customClass="field.customClass"
             />
           </div>
         </div>
@@ -116,6 +137,9 @@ import SwitchThreePhase from "@/components/inputs/SwitchThreePhase.vue"; // Comp
 import Switch from "@/components/inputs/Switch.vue"; // Componente SwitchThreePhase
 import Label from "@/components/inputs/Label.vue"; // Componente Label
 import SelectInput from "@/components/inputs/Select.vue"; // Componente Select
+import Paragraph from "@/components/inputs/P.vue"; // Componente P
+import Sp from "@/components/inputs/Span.vue"; // Componente Span
+import Heading from "@/components/inputs/H.vue"; // Componente H
 
 // Definir las props que se pasan al modal
 const props = defineProps({
@@ -142,7 +166,7 @@ const props = defineProps({
 });
 
 // Emitir un evento para cerrar el modal
-const emit = defineEmits(["update:show"]);
+const emit = defineEmits(["update:show", "update-dependent"]);
 
 // Control de visibilidad
 const isVisible = ref(props.show);
@@ -158,6 +182,9 @@ const getComponent = (type) => {
   if (type === "textarea") return Textarea;
   if (type === "switchThreePhase") return SwitchThreePhase;
   if (type === "select") return SelectInput;
+  if (type === "p") return Paragraph;
+  if (type === "span") return Sp;
+  if (type === "h") return Heading;
   return null;
 };
 

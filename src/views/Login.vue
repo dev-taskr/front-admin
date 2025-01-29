@@ -53,13 +53,6 @@
           >
             Iniciar Sesión
           </Button>
-
-          <Button
-            type="button"
-            @click="goToDashboard()"
-          >
-            Dashboard
-          </Button>
         </form>
       </div>
     </div>
@@ -151,9 +144,5 @@ const handleLogin = async () => {
     modalType.value = "error";
     showModal.value = true;  // Muestra el modal
   }
-};
-
-const goToDashboard = () => {
-  router.push('dashboard');
 };
 </script>

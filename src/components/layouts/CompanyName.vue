@@ -1,20 +1,17 @@
 <template>
-    <div class="text-center flex-grow">
-      <span class="text-lg font-semibold">{{ companyData.name }}</span>
-    </div>
+  <div class="text-center flex-grow">
+    <span class="text-lg font-semibold">{{ companyData.name }}</span>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
-import { useCompanyStore } from "@/stores/storeEmpresa.js";
 
-// Acceso al store de Pinia
-const companyStore = useCompanyStore();
+// Obtenemos los datos desde localStorage
+const storedCompany = localStorage.getItem("selectedCompany");
+const companyData = ref(storedCompany ? JSON.parse(storedCompany) : { name: "" });
 
-// Datos de la empresa desde el store
-const companyData = computed(() => companyStore.selectedCompany);
-
-// Iniciales del nombre de la empresa
+// Computed para las iniciales del nombre de la empresa
 const initials = computed(() =>
   companyData.value.name
     ? companyData.value.name
@@ -25,8 +22,7 @@ const initials = computed(() =>
     : ""
 );
 </script>
-  
-  <style scoped>
-  /* Estilos opcionales */
-  </style>
-  
+
+<style scoped>
+/* Estilos opcionales */
+</style>

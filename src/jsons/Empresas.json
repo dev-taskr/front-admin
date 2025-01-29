@@ -4,8 +4,8 @@
     "rut": "123456789-k",
     "name": "Tech Innovators LLC",
     "razon_social": "razon social prueba",
-    "region": "RM",
-    "comuna": 2,
+    "region": "XV",
+    "comuna": "Arica",
     "description": "Empresa dedicada al desarrollo de software y tecnología innovadora.",
     "responsable": "Yerson Retamal",
     "state": "completed"
@@ -16,7 +16,7 @@
     "name": "EcoGreen Solutions",
     "razon_social": "razon social prueba",
     "region": "RM",
-    "comuna": 2,
+    "comuna": "Cerrillos",
     "description": "Proveedor de soluciones sostenibles para energías renovables.",
     "responsable": "Yerson Retamal",
     "state": "completed"
@@ -27,7 +27,7 @@
     "name": "Global Traders Co.",
     "razon_social": "razon social prueba",
     "region": "RM",
-    "comuna": 2,
+    "comuna": "Cerrillos",
     "description": "Empresa especializada en importación y exportación de bienes de consumo.",
     "responsable": "Yerson Retamal",
     "state": "completed"
@@ -38,7 +38,7 @@
     "name": "prueba 1",
     "razon_social": "razon social prueba",
     "region": "RM",
-    "comuna": 2,
+    "comuna": "Lo Espejo",
     "description": "prueba 123456",
     "responsable": "Yerson Retamal",
     "state": "completed"
@@ -49,7 +49,7 @@
     "name": "yerson 2",
     "razon_social": "razon social prueba",
     "region": "RM",
-    "comuna": 2,
+    "comuna": "Lo Prado",
     "description": "prueba yerson",
     "responsable": "Yerson Retamal",
     "state": "completed"

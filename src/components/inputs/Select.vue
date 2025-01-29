@@ -44,10 +44,10 @@
   // Emitir evento al cambiar el valor
   const handleChange = (event) => {
     const selectedValue = event.target.value;
-    console.log(selectedValue);
   
     // Si tiene un campo dependiente, emite el valor seleccionado
     if (props.field.dependentId) {
+        console.log(props.field.dependentId);
       emit("update-dependent", { id: props.field.dependentId, value: selectedValue });
     }
   };

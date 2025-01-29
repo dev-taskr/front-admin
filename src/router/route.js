@@ -4,7 +4,13 @@ import Login from '@/views/Login.vue';
 import Dashboard from '@/views/Dashboard.vue';
 import Empresas from '@/views/empresas/Index.vue';
 import EmpresasDetails from '@/views/empresas/Detail.vue';
-import Tasks from '@/views/Tasks.vue';
+import EmpresasDashboard from '@/views/empresas/pages/Dashboard.vue';
+import EmpresasConfiguracion from '@/views/empresas/pages/Configuracion.vue';
+import EmpresasZonasGeograficas from '@/views/empresas/pages/ZonasGeograficas.vue';
+import EmpresasSucursalesEmpresa from '@/views/empresas/pages/SucursalesEmpresa.vue';
+import EmpresasUsuariosEmpresa from '@/views/empresas/pages/UsuariosEmpresa.vue';
+import EmpresasAreasTrabajo from '@/views/empresas/pages/AreasTrabajoEmpresa.vue';
+import EmpresasTasks from '@/views/empresas/pages/TasksEmpresa.vue';
 
 const routes = [
   { path: '/', name: 'Login', component: Login },
@@ -12,7 +18,7 @@ const routes = [
     path: '/dashboard', 
     name: 'Dashboard', 
     component: Dashboard, 
-    /* meta: { requiresAuth: true }, */ // Marca esta ruta como protegida
+    /* meta: { requiresAuth: true }, */
   },
   { 
     path: '/empresas', 
@@ -24,14 +30,51 @@ const routes = [
     path: '/empresas/detail/:id', 
     name: 'EmpresasDetail', 
     component: EmpresasDetails, 
+    /* meta: { requiresAuth: true }, */
     props: true,
+    children: [
+      {
+        path: '',
+        redirect: '/empresas/detail/:id/empresadashboard',
+      },
+      {
+        path: 'empresadashboard',
+        name: 'EmpresaDashboard',
+        component: EmpresasDashboard,
+      },
+      {
+        path: "configuracion",
+        name: "Configuracion",
+        component: EmpresasConfiguracion,
+      },
+      {
+        path: "zonasgeograficasempresa",
+        name: "ZonasGeograficasEmpresa",
+        component: EmpresasZonasGeograficas,
+      },
+      {
+        path: "sucursalesempresa",
+        name: "SucursalesEmpresa",
+        component: EmpresasSucursalesEmpresa,
+      },
+      {
+        path: "usuariosempresa",
+        name: "UsuariosEmpresa",
+        component: EmpresasUsuariosEmpresa,
+      },
+      {
+        path: "areastrabajoempresa",
+        name: "AreasTrabajoEmpresa",
+        component: EmpresasAreasTrabajo,
+      },
+      { 
+        path: 'tasksempresa', 
+        name: 'TasksEmpresa', 
+        component: EmpresasTasks,
+      },
+    ],
   },
-  { 
-    path: '/tasks', 
-    name: 'Tasks', 
-    component: Tasks, 
-    /* meta: { requiresAuth: true }, */ // Marca esta ruta como protegida
-  },
+  
 ];
 
 const router = createRouter({

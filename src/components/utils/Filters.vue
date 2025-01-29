@@ -1,57 +1,52 @@
 <template>
-    <div :class="theme" class="flex items-center justify-between p-4 mb-4">
-      <!-- Botones -->
-      <div class="flex gap-4">
-        <button v-if="dashboard" @click="goToDashboard()" class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
-          Inicio
-        </button>
-        <button v-if="ircumplimiento" class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
-          Ir a Cumplimiento
-        </button>
-        <button v-if="back" @click="handleBackClick()" class="px-4 py-2 bg-teal-500 text-white rounded-full flex items-center gap-2 hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          Atrás
-        </button>
-      </div>
-  
-      <!-- Selector de sucursal -->
-      <div class="flex items-center gap-2"  v-if="sucursal">
-        <label for="sucursal" class="text-gray-700 dark:text-gray-300">Sucursal:</label>
-        <div class="relative">
-          <select
-            id="sucursal"
-            class="appearance-none border border-gray-300 rounded-full py-2 pl-3 pr-8 bg-white focus:ring-teal-500 focus:border-teal-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-teal-400"
-            v-model="selectedSucursal"
-          >
-            <option value="sucursal1">Sucursal 1</option>
-            <option value="sucursal2">Sucursal 2</option>
-            <option value="sucursal3">Sucursal 3</option>
-          </select>
-        </div>
-      </div>
-  
-      <!-- Campo de fecha -->
-      <div class="flex items-center gap-2" v-if="periodo">
-        <label for="periodo" class="text-gray-700 dark:text-gray-300">Periodo:</label>
-        <input
-          type="date"
-          id="periodo"
-          class="border border-gray-300 rounded-full p-2 focus:ring-teal-500 focus:border-teal-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-teal-400"
-          v-model="selectedDate"
-        />
-      </div>
-  
-      <!-- Botón de búsqueda -->
-      <button v-if="search" 
+  <div :class="theme,classFilter" class="flex items-center justify-between mb-4">
+    <!-- Botones -->
+    <div class="flex gap-4">
+      <button
+        v-if="dashboard"
+        @click="goToDashboard"
+        class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800"
+      >
+        Inicio
+      </button>
+      <button
+        v-if="ircumplimiento"
+        class="px-4 py-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800"
+      >
+        Ir a Cumplimiento
+      </button>
+      <button
+        v-if="back"
+        @click="handleBackClick"
+        class="px-4 py-2 bg-teal-500 text-white rounded-full flex items-center gap-2 hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Atrás
+      </button>
+    </div>
+
+    <!-- Campo de búsqueda -->
+    <div class="flex items-center gap-2 relative">
+      <input
+        v-if="showSearchBox"
+        type="text"
+        placeholder="Buscar..."
+        v-model="searchQuery"
+        @input="$emit('update', $event.target.value)"
+        class="absolute right-full mr-4 px-4 py-2 w-60 border border-gray-300 rounded-full focus:ring-teal-500 focus:border-teal-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:ring-teal-400 transition-transform transform origin-right scale-x-100"
+      />
+      <button
+        v-if="search"
+        @click="toggleSearch"
         class="p-2 bg-teal-500 text-white rounded-full hover:bg-teal-600 dark:bg-teal-700 dark:hover:bg-teal-800"
       >
         <svg
@@ -70,43 +65,71 @@
         </svg>
       </button>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, computed, defineProps, defineEmits } from "vue";
-  import { useRouter } from "vue-router"; // Importamos useRouter de Vue Router
-  
-  const props = defineProps({
-    dashboard: Boolean,
-    ircumplimiento: Boolean,
-    back: Boolean,
-    sucursal: Boolean,
-    periodo: Boolean,
-    search: Boolean,
-  });
+  </div>
+</template>
 
-  // Variables reactivas
-  const selectedDate = ref("");
-  const selectedSucursal = ref("sucursal1");
-  const router = useRouter(); // Usamos useRouter para obtener el router
-  
-  // Tema (claro/oscuro automático según la clase en el <html>)
-  const theme = ref("light");
+<script setup>
+import { ref, computed, watch } from "vue";
+import { useRouter } from "vue-router";
 
-  const handleBackClick = () => {
-    const previousRoute = localStorage.getItem('previousRoute');
-    router.push(previousRoute);
+const props = defineProps({
+  dashboard: Boolean,
+  ircumplimiento: Boolean,
+  back: Boolean,
+  sucursal: Boolean,
+  periodo: Boolean,
+  search: Boolean,
+  records: {
+    type: Array,
+    default: () => [],
+  },
+  filterKey: {
+    type: String,
+    default: "title", // Campo que se filtrará (por defecto, "title")
+  },
+  classFilter: {
+    type: String,
+    default: ""
+  }
+});
+
+const emit = defineEmits(["update"]);
+
+const router = useRouter();
+const theme = ref("light");
+const showSearchBox = ref(false);
+const searchQuery = ref("");
+
+const handleBackClick = () => {
+  const previousRoute = localStorage.getItem("previousRoute");
+  router.push(previousRoute);
 };
 
 const goToDashboard = () => {
-    router.push({name: 'Dashboard'});
+  router.push({ name: "Dashboard" });
 };
-  </script>
-  
-  <style scoped>
-  /* Estilo adicional para transiciones */
-  :global(.dark) {
-    transition: background-color 0.3s, color 0.3s;
-  }
-  </style>
-  
+
+const toggleSearch = () => {
+  showSearchBox.value = !showSearchBox.value;
+};
+
+// Computed para filtrar datos
+const filteredRecords = computed(() => {
+  const query = searchQuery.value.toLowerCase();
+  return props.records.filter((record) => {
+    const fieldValue = record[props.filterKey]?.toString().toLowerCase();
+    return fieldValue?.includes(query);
+  });
+});
+
+// Emitir datos filtrados al componente padre
+/* const emitFilteredData = () => {
+  emit("update", filteredRecords.value);
+}; */
+</script>
+
+<style scoped>
+:global(.dark) {
+  transition: background-color 0.3s, color 0.3s;
+}
+</style>

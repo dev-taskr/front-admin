@@ -1,97 +1,122 @@
 <template>
-    <BaseLayout :title="'Lista de Tareas'">
-      <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        <Filters />
-        <div class=" mx-auto"><!-- max-w-[1200px] -->
-          <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
-            <div class="border-b pb-4 border-gray-200 dark:border-gray-700">
-              <div class="flex items-center pl-4 pr-4">
-                <div class="w-64 shrink-0">
-                  <h2 class="font-medium text-gray-700 dark:text-gray-300">Tareas</h2>
-                </div>
-                <div class="flex-1">
-                  <h2 class="font-medium text-gray-700 dark:text-gray-300">Descripción Corta</h2>
-                </div>
-                <div class="flex items-center gap-16">
-                  <h2 class="font-medium text-gray-700 dark:text-gray-300 w-20 text-center">Estado</h2>
-                  <h2 class="font-medium text-gray-700 dark:text-gray-300 w-20 text-center">Evidencia</h2>
-                </div>
-              </div>
+    <div class="mx-auto">
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm">
+        <Filters
+            :dashboard="false"
+            :ircumplimiento="false"
+            :back="false"
+            :sucursal="false"
+            :search="true"
+            :periodo="false"
+            :records="[]"
+            :filterKey="filterKey"
+            @update="updateTableData"
+            
+        />
+        <div class="border-b pb-4 border-gray-200 dark:border-gray-700">
+          <div class="flex items-center pl-4 pr-4">
+            <div class="w-64 shrink-0">
+              <h2 class="font-medium text-gray-700 dark:text-gray-300">Tareas</h2>
             </div>
-            <div class="grid grid-cols-1 gap-6 mt-6">
-              <Table
-                v-for="row in rowsWithStates"
-                :key="row.id"
-                :item="row"
-                :clickable="false"
-                baseRoute="/empresas"
-                :icons="getIconsForRow(row)"
-                :typeSwitch="3"
-                @update:status="updateRowStatus"
-              />
+            <div class="flex-1">
+              <h2 class="font-medium text-gray-700 dark:text-gray-300">Descripción Corta</h2>
+            </div>
+            <div class="flex items-center gap-16">
+              <h2 class="font-medium text-gray-700 dark:text-gray-300 w-20 text-center">Estado</h2>
+              <h2 class="font-medium text-gray-700 dark:text-gray-300 w-20 text-center">Evidencia</h2>
             </div>
           </div>
         </div>
+        <div class="grid grid-cols-1 gap-6 mt-6">
+          <Table
+            v-for="row in rowsWithStates"
+            :key="row.id"
+            :item="row"
+            :clickable="false"
+            baseRoute="/empresas"
+            :icons="getIconsForRow(row)"
+            :typeSwitch="3"
+            @update:status="updateRowStatus"
+          />
+        </div>
       </div>
+    </div>
   
-      <!-- Modal Dynamic -->
-      <ModalDynamic
-        :title="''"
-        :message="''"
-        :show="isModalVisible"
-        :config="modalConfig"
-        @update:show="isModalVisible = $event"
-      />
-    </BaseLayout>
+    <!-- Modal Dynamic -->
+    <ModalDynamic
+      :title="''"
+      :message="''"
+      :show="isModalVisible"
+      :config="modalConfig"
+      @update:show="isModalVisible = $event"
+    />
   </template>
   
   <script setup>
-  import { ref, computed } from "vue";
-  import BaseLayout from "@/components/layouts/Layout.vue";
+  import { ref, computed, defineProps } from "vue";
   import Table from "@/components/utils/Table.vue";
   import ModalDynamic from "@/components/utils/ModalDynamic.vue"; // Importar el modal dinámico
   import Filters from "@/components/utils/Filters.vue";
+  import { filterData } from "@/services/filter"; // Importar filtro
   
-    const rows = ref([
-        {
-            id: "202501130000001a",
-            title: "Actualizar sistema de Tech Innovators LLC",
-            frequency: "Semanal",
-            details: "Revisar y actualizar el software desarrollado por la empresa Tech Innovators LLC.",
-            status: "failed",
-            images: [
-            "https://via.placeholder.com/300?text=Tech+Innovators+1",
-            "https://via.placeholder.com/300?text=Tech+Innovators+2"
-            ],
-        },
-        {
-            id: "202501130000002b",
-            title: "Revisión mensual de EcoGreen Solutions",
-            frequency: "Mensual",
-            details: "Analizar los informes de sostenibilidad y progreso en energías renovables de EcoGreen Solutions.",
-            status: "completed",
-            images: [
-            "https://via.placeholder.com/300?text=EcoGreen+1",
-            "https://via.placeholder.com/300?text=EcoGreen+2",
-            "https://via.placeholder.com/300?text=EcoGreen+3"
-            ],
-        },
-        {
-            id: "202501130000003c",
-            title: "Coordinación diaria con Global Traders Co.",
-            frequency: "Diaria",
-            details: "Supervisar y coordinar actividades de importación y exportación con Global Traders Co.",
-            status: "completed",
-            images: [
-            "https://via.placeholder.com/300?text=Global+Traders+1"
-            ],
-        },
-    ]);
+  const props = defineProps({
+    cards: {
+        type: Array,
+        required: true,
+    },
+    messages: {
+        type: Array,
+        required: true,
+    },
+  });
 
-
-
+  const rows = ref([
+      {
+          id: "202501130000001a",
+          name: "Actualizar sistema de Tech Innovators LLC",
+          frequency: "Semanal",
+          description: "Revisar y actualizar el software desarrollado por la empresa Tech Innovators LLC.",
+          status: "failed",
+          images: [
+          "https://via.placeholder.com/300?text=Tech+Innovators+1",
+          "https://via.placeholder.com/300?text=Tech+Innovators+2"
+          ],
+      },
+      {
+          id: "202501130000002b",
+          name: "Revisión mensual de EcoGreen Solutions",
+          frequency: "Mensual",
+          description: "Analizar los informes de sostenibilidad y progreso en energías renovables de EcoGreen Solutions.",
+          status: "completed",
+          images: [
+          "https://via.placeholder.com/300?text=EcoGreen+1",
+          "https://via.placeholder.com/300?text=EcoGreen+2",
+          "https://via.placeholder.com/300?text=EcoGreen+3"
+          ],
+      },
+      {
+          id: "202501130000003c",
+          name: "Coordinación diaria con Global Traders Co.",
+          frequency: "Diaria",
+          description: "Supervisar y coordinar actividades de importación y exportación con Global Traders Co.",
+          status: "completed",
+          images: [
+          "https://via.placeholder.com/300?text=Global+Traders+1"
+          ],
+      },
+  ]);
   
-  const rowsWithStates = computed(() => rows.value);
+  const searchTerm = ref(""); // Término de búsqueda para el filtro
+  const filterKey = ref("name"); // Clave para filtrar
+
+  const rowsWithStates = computed(() => {
+    return filterData(rows.value, filterKey.value, searchTerm.value);
+  });
+
+  // Función para actualizar el término de búsqueda
+  const updateTableData = (newSearchTerm) => {
+    searchTerm.value = newSearchTerm;
+  }; 
   
   const isModalVisible = ref(false); // Controla la visibilidad del modal
   const modalConfig = ref(null); // Configuración dinámica del modal
